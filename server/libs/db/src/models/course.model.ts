@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 @modelOptions({
   schemaOptions: {
     timestamps: true,
+    toJSON: { virtuals: true },
   },
 })
 export class Course {
@@ -16,4 +17,10 @@ export class Course {
   @prop()
   cover: string;
 
+  @arrayProp({
+    ref: 'Episode',
+    localField: '_id',
+    foreignField: 'course',
+  })
+  episodes: Ref<Episode>[];
 }
