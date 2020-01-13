@@ -9,7 +9,7 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { InjectModel } from 'nestjs-typegoose';
-import { User } from '@libs/db/models/user.model';
+import { User, UserDocument } from '@libs/db/models/user.model';
 import { ReturnModelType, DocumentType } from '@typegoose/typegoose';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtService } from '@nestjs/jwt';
@@ -35,7 +35,7 @@ export class AuthController {
   @Post('login')
   @ApiOperation({ summary: '登录' })
   @UseGuards(AuthGuard('local'))
-  async login(@Body() dto: LoginDto, @CurrentUser() user: DocumentType<User>) {
+  async login(@Body() dto: LoginDto, @CurrentUser() user: UserDocument) {
     return {
       token: this.jwtService.sign(String(user._id)),
     };
@@ -45,7 +45,7 @@ export class AuthController {
   @ApiOperation({ summary: '获取个人信息' })
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
-  async user(@CurrentUser() user: DocumentType<User>) {
+  async user(@CurrentUser() user: UserDocument) {
     return user._id;
   }
 }
