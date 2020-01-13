@@ -5,7 +5,6 @@
       v-model="currentIndex"
       :items="course.episodes.map((v, i) => ({ text: v.name, value: i }))"
     ></v-select>
-    <p>{{ episode }}</p>
     <video :src="episode.file" width="100%" controls></video>
   </div>
 </template>
